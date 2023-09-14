@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "tempo-operator.configMapName" . }}
+  labels:
+    {{- include "tempo-operator.labels" . | nindent 4 }}
+data:
+  {{ include "tempo-operator.configMapName" . }}.yaml: |
+    {{- .Values.config | nindent 4 }}

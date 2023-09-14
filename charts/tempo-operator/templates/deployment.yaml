@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tempo-operator.fullname" . }}
+  labels:
+    {{- include "tempo-operator.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "tempo-operator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tempo-operator.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - args:
+            - start
+            - --config={{ include "tempo-operator.configMapName" . }}.yaml
+          image: "{{ .Values.image.controllerManager.repository }}:{{ .Values.image.controllerManager.tag }}"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          name: tempo-operator
+          ports:
+            - containerPort: 9443
+              name: webhook-server
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          {{- if .Values.resources.tempoOperator }}
+          resources:
+          {{- toYaml .Values.resources.tempoOperator | nindent 12 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext.tempoOperator | nindent 12 }}
+          volumeMounts:
+            - mountPath: /tmp/k8s-webhook-server/serving-certs
+              name: cert
+              readOnly: true
+            - mountPath: /{{ include "tempo-operator.configMapName" . }}.yaml
+              name: {{ include "tempo-operator.configMapName" . }}
+              subPath: {{ include "tempo-operator.configMapName" . }}.yaml
+        - args:
+            - --secure-listen-address=0.0.0.0:8443
+            - --upstream=http://127.0.0.1:8080/
+            - --logtostderr=true
+            - --v=0
+          image: "{{ .Values.image.kubeRbacProxy.repository }}:{{ .Values.image.kubeRbacProxy.tag }}"
+          name: kube-rbac-proxy
+          ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+          {{- if .Values.resources.kubeRbacProxy }}
+          resources:
+          {{- toYaml .Values.resources.kubeRbacProxy | nindent 12 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext.kubeRbacProxy | nindent 12 }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "tempo-operator.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: cert
+          secret:
+            defaultMode: 420
+            secretName: webhook-server-cert
+        - configMap:
+            name: {{ include "tempo-operator.configMapName" . }}
+          name: {{ include "tempo-operator.configMapName" . }}
