@@ -1,0 +1,35 @@
+{{- if or (include "linstor-cluster.createApiTLSCert" .) (include "linstor-cluster.createInternalTLSCert" .) }}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: ca-bootstrapper
+  labels:
+    {{- include "linstor-cluster.labels" . | nindent 4 }}
+spec:
+  selfSigned: { }
+{{- end }}
+{{- if (include "linstor-cluster.createInternalTLSCert" .) }}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  labels:
+    {{- include "linstor-cluster.labels" . | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+{{- end }}
+{{- if (include "linstor-cluster.createApiTLSCert" .) }}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  labels:
+    {{- include "linstor-cluster.labels" . | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+{{- end }}

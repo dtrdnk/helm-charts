@@ -1,0 +1,21 @@
+{{- with .Values.linstorCluster }}
+apiVersion: piraeus.io/v1
+kind: LinstorCluster
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "linstor-cluster.labels" $ | nindent 4 }}
+spec:
+  {{- with (dig "apiTLS" (dict) .) }}
+  apiTLS: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "internalTLS" (dict) .) }}
+  internalTLS: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- if dig "linstorPassphraseSecret" "" . }}
+  linstorPassphraseSecret: {{ dig "linstorPassphraseSecret" "" . }}
+  {{- end }}
+  {{- with (dig "nodeSelector" (dict) .) }}
+  nodeSelector: {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

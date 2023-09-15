@@ -1,0 +1,26 @@
+{{- $internalTLS := .Values.linstorCluster.internalTLS }}
+{{- with .Values.linstorSatelliteConfiguration }}
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "linstor-cluster.labels" $ | nindent 4 }}
+spec:
+  {{- if $internalTLS }}
+  internalTLS:
+  {{- $internalTLS | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with (dig "nodeSelector" (dict) .) }}
+  nodeSelector: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "storagePools" (dict) .) }}
+  storagePools: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "patches" (dict) .) }}
+  patches: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "properties" (dict) .) }}
+  properties: {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
