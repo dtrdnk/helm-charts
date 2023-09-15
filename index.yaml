@@ -1,0 +1,34 @@
+apiVersion: v1
+entries:
+  linstor-cluster:
+  - apiVersion: v2
+    appVersion: v2.1.1
+    created: "2023-09-15T11:24:41.79652168Z"
+    description: 'Deploy the Linstor Cluster via Piraeus operator '
+    digest: 5c1c953ca67f1c558088dbec35de2f8540b9de73e9e8625dc65125f3409903c9
+    home: https://github.com/dtrdnk/dtrdnk-helm-charts
+    icon: https://raw.githubusercontent.com/piraeusdatastore/piraeus/master/artwork/sandbox-artwork/icon/color.svg
+    keywords:
+    - storage
+    maintainers:
+    - name: The Helm Chart Maintainers
+      url: https://github.com/dtrdnk
+    name: linstor-cluster
+    sources:
+    - https://github.com/piraeusdatastore/linstor-cluster
+    type: application
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/linstor-cluster-0.0.1/linstor-cluster-0.0.1.tgz
+    version: 0.0.1
+  tempo-operator:
+  - apiVersion: v2
+    appVersion: v0.4.0
+    created: "2023-09-15T11:24:41.908553823Z"
+    description: A Helm chart for Kubernetes
+    digest: da32cb580ff3022e65f68180d7c10c278640bc85adcad4d69c69235f55151d23
+    name: tempo-operator
+    type: application
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/tempo-operator-0.0.2/tempo-operator-0.0.2.tgz
+    version: 0.0.2
+generated: "2023-09-15T11:24:41.908559223Z"
