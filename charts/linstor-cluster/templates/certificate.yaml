@@ -1,0 +1,42 @@
+{{- if (include "linstor-cluster.createApiTLSCert" .) }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  labels:
+    {{- include "linstor-cluster.labels" $ | nindent 4 }}
+spec:
+  commonName: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  secretName: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  duration: 87600h0m0s # 10 years
+  isCA: true
+  usages:
+    - signing
+    - key encipherment
+    - cert sign
+  issuerRef:
+    name: ca-bootstrapper
+    kind: Issuer
+{{- end }}
+{{- if (include "linstor-cluster.createInternalTLSCert" .) }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  labels:
+    {{- include "linstor-cluster.labels" $ | nindent 4 }}
+spec:
+  commonName: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  secretName: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  duration: 87600h0m0s # 10 years
+  isCA: true
+  usages:
+    - signing
+    - key encipherment
+    - cert sign
+  issuerRef:
+    name: ca-bootstrapper
+    kind: Issuer
+{{- end }}

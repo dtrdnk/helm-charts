@@ -1,0 +1,2 @@
+LinstorCluser: {{ .Values.linstorCluster.name }} and
+LinstorSatelliteConfiguration: {{ .Values.linstorSatelliteConfiguration.name }} successfully deployed!
