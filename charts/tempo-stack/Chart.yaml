@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tempo-stack
+description: A Helm chart for Tempo-Stack
+type: application
+version: 0.0.1
+appVersion: "2.2.3"

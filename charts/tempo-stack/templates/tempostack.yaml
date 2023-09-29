@@ -1,0 +1,49 @@
+{{- with .Values.tempoStack }}
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoStack
+metadata:
+  name: {{ .name }}
+spec:
+  {{- with (dig "images" (dict) .) }}
+  images: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "limits" (dict) .) }}
+  limits: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "managementState" (dict) .) }}
+  managementState: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "observability" (dict) .) }}
+  observability: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "replicationFactor" (dict) .) }}
+  replicationFactor: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "resources" (dict) .) }}
+  resources: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "retention" (dict) .) }}
+  retention: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "search" (dict) .) }}
+  search: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "serviceAccount" (dict) .) }}
+  serviceAccount: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "storage" (dict) .) }}
+  storage: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "storageClassName" (dict) .) }}
+  storageClassName: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "storageSize" (dict) .) }}
+  storageSize: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "template" (dict) .) }}
+  template: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "tenants" (dict) .) }}
+  tenants: {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

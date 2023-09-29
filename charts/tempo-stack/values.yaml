@@ -1,0 +1,58 @@
+## Not recommended for production deployments! Create the secret manually instead.
+#secret:
+#  name: minio-test
+#  data:
+#    endpoint: http://minio.minio.svc:9000
+#    bucket: tempo
+#    access_key_id: tempo
+#    access_key_secret: supersecret
+
+## Tempo Stack Definition
+tempoStack:
+  name: stack
+#  images:
+#    tempo:
+#    tempoGateway:
+#    tempoGatewayOpa:
+#    tempoQuery:
+#  limits:
+#  managementState:
+#  observability:
+#  replicationFactor:
+#  resources:
+#    total:
+#      limits:
+#        memory: 2Gi
+#        cpu: 2000m
+#  retention:
+#    global:
+#      # Retention period. Default: value is 48h
+#      traces: 3h
+#  search:
+#    # Limit used for search requests if none is set by the caller (default: 20)
+#    defaultResultLimit: 20
+#    # The maximum allowed time range for a search, default: 0s which means unlimited
+#    maxDuration: 0s
+#    # The default value of 0 disables this limit
+#    maxResultLimit: 0
+#  serviceAccount:
+#  storage:
+#    secret:
+#      name: minio-test
+#      type: s3
+#  storageClassName: nfs-client
+#  storageSize: 1Gi
+#  template:
+#    compactor:
+#    distributor:
+#    gateway:
+#    ingester:
+#    querier:
+#    queryFrontend:
+#      jaegerQuery:
+#        enabled: true
+#        ingress:
+#          annotations:
+#          ingressClassName: nginx
+#          host: tempo-query.k8s.example.com
+#  tenants:
