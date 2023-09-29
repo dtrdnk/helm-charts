@@ -54,5 +54,5 @@ tempoStack:
 #        ingress:
 #          annotations:
 #          ingressClassName: nginx
-#          host: tempo-query.k8s.dev.ias.iac.spb.ru
+#          host: tempo-query.k8s.example.com
 #  tenants:
