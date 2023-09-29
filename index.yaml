@@ -23,6 +23,20 @@ entries:
   tempo-operator:
   - apiVersion: v2
     appVersion: v0.4.0
+    created: "2023-09-29T13:19:48.696675305Z"
+    description: A Helm chart for Kubernetes
+    digest: 89dbb0f30edfe1e5505b1f54e1c03fecd9d8a92cc59767586db176cf82ad72ee
+    home: https://grafana.com/docs/tempo/latest/setup/operator
+    icon: https://grafana.com/static/assets/img/logos/grafana-tempo.svg
+    name: tempo-operator
+    sources:
+    - https://github.com/grafana/tempo-operator
+    type: application
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/tempo-operator-0.0.3/tempo-operator-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: v0.4.0
     created: "2023-09-15T11:24:41.908553823Z"
     description: A Helm chart for Kubernetes
     digest: da32cb580ff3022e65f68180d7c10c278640bc85adcad4d69c69235f55151d23
@@ -42,4 +56,4 @@ entries:
     urls:
     - https://github.com/dtrdnk/helm-charts/releases/download/tempo-stack-0.0.1/tempo-stack-0.0.1.tgz
     version: 0.0.1
-generated: "2023-09-29T12:57:44.556217892Z"
+generated: "2023-09-29T13:19:48.88344958Z"
