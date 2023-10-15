@@ -1,5 +1,5 @@
-{{- $internalTLS := .Values.linstorCluster.internalTLS }}
-{{- with .Values.linstorSatelliteConfiguration }}
+{{- range .Values.linstorSatelliteConfiguration }}
+{{- $internalTLS := include "linstor-cluster.internalTLS" $ }}
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
@@ -9,7 +9,7 @@ metadata:
 spec:
   {{- if $internalTLS }}
   internalTLS:
-  {{- $internalTLS | toYaml | nindent 4 }}
+  {{- $internalTLS | nindent 4 }}
   {{- end }}
   {{- with (dig "nodeSelector" (dict) .) }}
   nodeSelector: {{- toYaml . | nindent 4 }}

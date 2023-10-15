@@ -1,10 +1,10 @@
-{{- with .Values.linstorCluster }}
 apiVersion: piraeus.io/v1
 kind: LinstorCluster
 metadata:
-  name: {{ .name }}
+  name: {{ include "linstor-cluster.fullname" $ }}
   labels:
     {{- include "linstor-cluster.labels" $ | nindent 4 }}
+{{- with .Values.linstorCluster }}
 spec:
   {{- with (dig "apiTLS" (dict) .) }}
   apiTLS: {{- toYaml . | nindent 4 }}

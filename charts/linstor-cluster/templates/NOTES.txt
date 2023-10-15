@@ -1,2 +1,5 @@
-LinstorCluser: {{ .Values.linstorCluster.name }} and
-LinstorSatelliteConfiguration: {{ .Values.linstorSatelliteConfiguration.name }} successfully deployed!
+LinstorCluser: {{ include "linstor-cluster.fullname" $ }}
+{{- range .Values.linstorSatelliteConfiguration }}
+LinstorSatelliteConfiguration: {{ .name }}
+{{- end }}
+successfully deployed!

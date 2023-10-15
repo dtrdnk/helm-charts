@@ -16,7 +16,7 @@ spec:
     - key encipherment
     - cert sign
   issuerRef:
-    name: ca-bootstrapper
+    name: {{ include "linstor-cluster.fullname" $ }}-ca-bootstrapper
     kind: Issuer
 {{- end }}
 {{- if (include "linstor-cluster.createInternalTLSCert" .) }}
@@ -37,6 +37,6 @@ spec:
     - key encipherment
     - cert sign
   issuerRef:
-    name: ca-bootstrapper
+    name: {{ include "linstor-cluster.fullname" $ }}-ca-bootstrapper
     kind: Issuer
 {{- end }}

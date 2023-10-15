@@ -12,14 +12,14 @@ If release name contains chart name it will be used as a full name.
 */}}
 {{- define "linstor-cluster.fullname" -}}
 {{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+    {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
+    {{- $name := default .Chart.Name .Values.nameOverride }}
+    {{- if contains $name .Release.Name }}
+        {{- .Release.Name | trunc 63 | trimSuffix "-" }}
+    {{- else }}
+        {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+    {{- end }}
 {{- end }}
 {{- end }}
 
@@ -54,9 +54,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Return true, if apiTLS enabled and cert published via cert-manager
 */}}
 {{- define "linstor-cluster.createApiTLSCert" -}}
-{{- if .Values.linstorCluster.apiTLS }}
-    {{- if .Values.linstorCluster.apiTLS.certManager }}
-        {{- true -}}
+{{- if .Values.linstorCluster }}
+    {{- if .Values.linstorCluster.apiTLS }}
+        {{- if .Values.linstorCluster.apiTLS.certManager }}
+            {{- true -}}
+        {{- end }}
     {{- end }}
 {{- end }}
 {{- end }}
@@ -65,9 +67,19 @@ Return true, if apiTLS enabled and cert published via cert-manager
 Return true, if internalTLS enabled and cert published via cert-manager
 */}}
 {{- define "linstor-cluster.createInternalTLSCert" -}}
-{{- if .Values.linstorCluster.internalTLS }}
-    {{- if .Values.linstorCluster.internalTLS.certManager }}
-        {{- true -}}
+{{- if .Values.linstorCluster }}
+    {{- if .Values.linstorCluster.internalTLS }}
+        {{- if .Values.linstorCluster.internalTLS.certManager }}
+            {{- true -}}
+        {{- end }}
     {{- end }}
 {{- end }}
+{{- end }}
+
+{{/*
+Define the internalTLS content
+*/}}
+{{- define "linstor-cluster.internalTLS" -}}
+{{- $internalTLS := default "" .Values.linstorCluster.internalTLS }}
+{{- $internalTLS | toYaml }}
 {{- end }}

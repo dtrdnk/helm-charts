@@ -3,7 +3,7 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: ca-bootstrapper
+  name: {{ include "linstor-cluster.fullname" $ }}-ca-bootstrapper
   labels:
     {{- include "linstor-cluster.labels" . | nindent 4 }}
 spec:

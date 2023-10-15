@@ -1,57 +1,56 @@
 # Definition of LinstorCluster
 # Ref https://github.com/piraeusdatastore/piraeus-operator/blob/v2/docs/reference/linstorcluster.md
-linstorCluster:
-  # Linstor cluster name
-  name: linstorcluster
+linstorCluster: {}
 #  apiTLS:
 #    certManager:
-#      name: linstor-api-ca
+#      name: linstor-cluster-api-ca
 #      kind: Issuer
 #  internalTLS:
 #    certManager:
-#      name: linstor-internal-ca
+#      name: linstor-cluster-internal-ca
 #      kind: Issuer
 #  # name of the secret in the namespace of the installed application. Encrypting snapshot by the passphrase. Necessary for backup on S3
-#  linstorPassphraseSecret: linstor-passphrase
-#  #  Run the linstrocluster on workers, which have piraeus.io/autoplace: 'yes' label
+#  linstorPassphraseSecret: linstor-cluster-passphrase
+#  #  Run the linstor-cluster on workers, which have "piraeus.io/autoplace: 'yes'" label
 #  nodeSelector:
 #    piraeus.io/autoplace: 'yes'
 
 # Definition of LinstorSatelliteConfiguration
 # Ref https://github.com/piraeusdatastore/piraeus-operator/blob/v2/docs/reference/linstorsatelliteconfiguration.md
-linstorSatelliteConfiguration:
-  # Satellites configuration name
-  name: storage-satellites
-#  # Definition of pools and devices
-#  storagePools:
-#    - name: lvm-thin
-#      lvmThinPool:
-#        volumeGroup: ""
-#        thinPool: thin
-#      source:
-#        hostDevices:
-#          - /dev/sdd
-#  # List of patches. Below described workaround patch for building kernel modules on CentOS 8 Stream
-#  patches:
-#    - target:
-#        kind: Pod
-#        name: satellite
-#      patch: |
-#        apiVersion: v1
-#        kind: Pod
-#        metadata:
-#          name: linstor-satellite
-#        spec:
-#          initContainers:
-#          - name: drbd-module-loader
-#            image: quay.io/piraeusdatastore/drbd9-centos8:v9.2.3
-#  # Optional. List of additional properties. Below described property how to exclude node from AutoplaceTarget
-#  properties:
-#    - name: AutoplaceTarget
-#      value: "no"
-#    # Define nodeSelector, where you can replace labels
-#  nodeSelector:
-#    piraeus.io/autoplace: 'yes'
+linstorSatelliteConfiguration: []
+#  # Satellites configuration list
+#  - name: storage-satellites
+#    # Definition of pools and devices
+#    storagePools:
+#      - name: lvm-thin
+#        lvmThinPool:
+#          volumeGroup: ""
+#          thinPool: thin
+#        source:
+#          hostDevices:
+#            - /dev/sdd
+#    # List of patches. Below described workaround patch for building kernel modules on CentOS 8 Stream
+#    patches:
+#      - target:
+#          kind: Pod
+#          name: satellite
+#        patch: |
+#          apiVersion: v1
+#          kind: Pod
+#          metadata:
+#            name: linstor-satellite
+#          spec:
+#            initContainers:
+#            - name: drbd-module-loader
+#              image: quay.io/piraeusdatastore/drbd9-centos8:v9.2.3
+#
+#    # Optional. List of additional properties. Below described property how to exclude node from AutoplaceTarget
+#    properties:
+#      - name: AutoplaceTarget
+#        value: "no"
+#      # Define nodeSelector, where you can replace labels
+#    nodeSelector:
+#      piraeus.io/autoplace: 'yes'
 
 # List of storageClasses. You can create different SC with different params
 storageClasses: []
