@@ -1,0 +1,25 @@
+name: Test Piraeus Chart
+
+on:
+  pull_request:
+    paths:
+      - 'charts/piraeus/**'
+    branches:
+      - master
+
+jobs:
+  collector-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          create-kind-cluster: "true"
+
+      - name: Run chart-testing (install)
+        run: ct install --charts charts/piraeus
