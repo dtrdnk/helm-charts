@@ -3,12 +3,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  name: {{ include "linstor-cluster.fullname" $ }}-api-tls
   labels:
     {{- include "linstor-cluster.labels" $ | nindent 4 }}
 spec:
-  commonName: {{ .Values.linstorCluster.apiTLS.certManager.name }}
-  secretName: {{ .Values.linstorCluster.apiTLS.certManager.name }}
+  commonName: {{ include "linstor-cluster.fullname" $ }}-api-tls
+  secretName: {{ include "linstor-cluster.fullname" $ }}-api-tls
   duration: 87600h0m0s # 10 years
   isCA: true
   usages:
@@ -24,12 +24,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  name: {{ include "linstor-cluster.fullname" $ }}-internal-tls
   labels:
     {{- include "linstor-cluster.labels" $ | nindent 4 }}
 spec:
-  commonName: {{ .Values.linstorCluster.internalTLS.certManager.name }}
-  secretName: {{ .Values.linstorCluster.internalTLS.certManager.name }}
+  commonName: {{ include "linstor-cluster.fullname" $ }}-internal-tls
+  secretName: {{ include "linstor-cluster.fullname" $ }}-internal-tls
   duration: 87600h0m0s # 10 years
   isCA: true
   usages:

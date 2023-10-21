@@ -1,23 +1,24 @@
 # Definition of LinstorCluster
 # Ref https://github.com/piraeusdatastore/piraeus-operator/blob/v2/docs/reference/linstorcluster.md
 linstorCluster: {}
+#  # TLS options requires cert-manager (cert-manager.io) to be installed in a cluster
 #  apiTLS:
-#    certManager:
-#      name: linstor-cluster-api-ca
-#      kind: Issuer
+#    enabled: true
 #  internalTLS:
-#    certManager:
-#      name: linstor-cluster-internal-ca
-#      kind: Issuer
-#  # name of the secret in the namespace of the installed application. Encrypting snapshot by the passphrase. Necessary for backup on S3
-#  linstorPassphraseSecret: linstor-cluster-passphrase
+#    enabled: true
+#  # This MASTER_PASSPHRASE required for encrypting and storing snapshot on S3.
+#  # Either define masterPassPhrase or define name of existingSecret
+#  linstorPassphraseSecret:
+#    masterPassPhrase: "shhhSuPerSecRetPassWoRd!11"
+#    # If you would like use existing secret, then comment out 'masterPassPhrase', end uncomment string below
+#    #existingSecretName: "linstor-extra-secret"
 #  #  Run the linstor-cluster on workers, which have "piraeus.io/autoplace: 'yes'" label
 #  nodeSelector:
 #    piraeus.io/autoplace: 'yes'
 
-# Definition of LinstorSatelliteConfiguration
+# Definition of linstorSatelliteConfigurations
 # Ref https://github.com/piraeusdatastore/piraeus-operator/blob/v2/docs/reference/linstorsatelliteconfiguration.md
-linstorSatelliteConfiguration: []
+linstorSatelliteConfigurations: []
 #  # Satellites configuration list
 #  - name: storage-satellites
 #    # Definition of pools and devices

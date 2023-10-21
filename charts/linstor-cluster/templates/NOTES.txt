@@ -1,5 +1,9 @@
 LinstorCluser: {{ include "linstor-cluster.fullname" $ }}
-{{- range .Values.linstorSatelliteConfiguration }}
-LinstorSatelliteConfiguration: {{ .name }}
+{{- if (include "linstor-cluster.createPassPhraseSecret" .) }}
+Secret with MASTER_PASSPHRASE: {{ include "linstor-cluster.fullname" $ }}-passphrase
 {{- end }}
-successfully deployed!
+{{- range .Values.linstorSatelliteConfigurations }}
+linstorSatelliteConfigurations: {{ .name }}
+{{- end }}
+
+Successfully deployed!

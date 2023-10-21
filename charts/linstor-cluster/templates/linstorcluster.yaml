@@ -6,14 +6,20 @@ metadata:
     {{- include "linstor-cluster.labels" $ | nindent 4 }}
 {{- with .Values.linstorCluster }}
 spec:
-  {{- with (dig "apiTLS" (dict) .) }}
-  apiTLS: {{- toYaml . | nindent 4 }}
+  {{- if (include "linstor-cluster.createApiTLSCert" $ ) }}
+  apiTLS:
+    certManager:
+      name: {{ include "linstor-cluster.fullname" $ }}-api-tls
+      kind: Issuer
   {{- end }}
-  {{- with (dig "internalTLS" (dict) .) }}
-  internalTLS: {{- toYaml . | nindent 4 }}
+  {{- if (include "linstor-cluster.createInternalTLSCert" $) }}
+  internalTLS:
+    certManager:
+      name: {{ include "linstor-cluster.fullname" $ }}-internal-tls
+      kind: Issuer
   {{- end }}
-  {{- if dig "linstorPassphraseSecret" "" . }}
-  linstorPassphraseSecret: {{ dig "linstorPassphraseSecret" "" . }}
+  {{- if (include "linstor-cluster.passPhraseSecretName" $) }}
+  linstorPassphraseSecret: {{ include "linstor-cluster.passPhraseSecretName" $ | trim}}
   {{- end }}
   {{- with (dig "nodeSelector" (dict) .) }}
   nodeSelector: {{- toYaml . | nindent 4 }}
