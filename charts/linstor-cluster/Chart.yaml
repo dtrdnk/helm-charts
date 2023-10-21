@@ -13,5 +13,5 @@ home: https://github.com/dtrdnk/dtrdnk-helm-charts
 sources:
   - https://github.com/piraeusdatastore/linstor-cluster
 
-version: 0.0.3
+version: 0.0.4
 appVersion: "v2.2.0"
