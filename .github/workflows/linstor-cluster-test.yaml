@@ -1,0 +1,47 @@
+name: Test linstor-cluster Chart
+
+on:
+  pull_request:
+    paths:
+      - 'charts/linstor-cluster/**'
+    branches:
+      - master
+  push:
+    paths:
+      - 'charts/linstor-cluster/**'
+    branches:
+      - master
+
+jobs:
+  linstor-cluster-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          create-kind-cluster: "true"
+
+      - name: Install cert-manager
+        run: |
+          helm install \
+            cert-manager jetstack/cert-manager \
+            --namespace cert-manager \
+            --create-namespace \
+            --version v1.13.1 \
+            --set installCRDs=true
+
+      - name: Install piraeus
+        run: |
+          helm install \
+            piraeus dtrdnk-helm-charts/piraeus \
+            --namespace data-store \
+            --create-namespace \
+            --version v2.2.0 
+
+      - name: Run chart-testing (install)
+        run: sleep 20 && ct install --namespace data-store --charts charts/linstor-cluster
