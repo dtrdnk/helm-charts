@@ -1,0 +1,5 @@
+linstorCluster:
+  apiTLS:
+    enabled: true
+  internalTLS:
+    enabled: true

@@ -28,11 +28,9 @@ jobs:
 
       - name: Install drbd and linux-headers pkg
         run: |
-          add-apt-repository ppa:linbit/linbit-drbd9-stack -y && \
-          apt update && \
-          apt install -y linux-headers-`uname -r` && \
-          apt install -y drbd-utils drbd-dkms lvm2 && \
-          apt install -y linux-headers-`uname -r`
+          sudo add-apt-repository ppa:linbit/linbit-drbd9-stack -y && \
+          sudo apt update && \
+          sudo apt install -y drbd-utils drbd-dkms lvm2
 
       - name: Install cert-manager
         run: |
@@ -42,6 +40,8 @@ jobs:
             --create-namespace \
             --version v1.13.1 \
             --set installCRDs=true
+            kubectl wait --timeout=5m --for=condition=available deployment cert-manager -n cert-manager
+            kubectl wait --timeout=5m --for=condition=available deployment cert-manager-webhook -n cert-manager
 
       - name: Install piraeus
         run: |
@@ -50,6 +50,7 @@ jobs:
             --namespace data-store \
             --create-namespace \
             --version v2.2.0 
+            kubectl wait --timeout=5m --for=condition=available deployment piraeus-controller-manager -n data-store
 
       - name: Run chart-testing (install)
-        run: sleep 20 && ct install --namespace data-store --charts charts/linstor-cluster
+        run: ct install --namespace data-store --charts charts/linstor-cluster
