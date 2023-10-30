@@ -21,10 +21,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Setup microk8s
+        uses: ./.github/actions/setup-microk8s
         with:
-          create-kind-cluster: "true"
+          create-microk8s-cluster: "true"
+
+      - name: Install drbd and linux-headers pkg
+        run: |
+          add-apt-repository ppa:linbit/linbit-drbd9-stack -y && \
+          apt update && \
+          apt install -y linux-headers-`uname -r` && \
+          apt install -y drbd-utils drbd-dkms lvm2 && \
+          apt install -y linux-headers-`uname -r`
 
       - name: Install cert-manager
         run: |

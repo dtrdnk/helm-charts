@@ -1,4 +1,4 @@
-name: Setup
+name: Setup kind
 description: sets up helm lint and testing environment
 inputs:
   create-kind-cluster:  # id of input

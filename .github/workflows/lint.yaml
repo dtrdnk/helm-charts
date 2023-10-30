@@ -5,8 +5,6 @@ on:
     branches:
       - master
   push:
-    paths:
-      - 'charts/linstor-cluster/**'
     branches:
       - master
 
@@ -19,8 +17,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Setup kind
+        uses: ./.github/actions/setup-kind
         with:
           create-kind-cluster: "false"
 

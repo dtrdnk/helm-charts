@@ -1,0 +1,26 @@
+name: Setup microk8s
+description: sets up OS packages, helm lint and testing environment for linstor
+inputs:
+  create-microk8s-cluster:  # id of input
+    description: 'Whether or not to create a microk8s cluster during setup'
+    required: true
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Helm
+      uses: azure/setup-helm@v3.5
+      with:
+        version: v3.9.0
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.7
+
+    - name: Set up chart-testing
+      uses: helm/chart-testing-action@v2.4.0
+
+    - uses: balchua/microk8s-actions@v0.4.1
+      with:
+        channel: '1.28/stable'
+        addons: '["dns", "rbac", "registry"]'
