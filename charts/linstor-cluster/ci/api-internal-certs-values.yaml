@@ -1,5 +1,14 @@
 linstorCluster:
   apiTLS:
-    enabled: true
+    certManager:
+      name: api-issuer
+      kind: Issuer
+    apiSecretName: linstor-api-tls
+    clientSecretName: linstor-client-tls
+    csiControllerSecretName: linstor-csi-controller-tls
+    csiNodeSecretName: linstor-csi-node-tls
   internalTLS:
-    enabled: true
+    certManager:
+      name: internal-issuer
+      kind: Issuer
+    secretName: internal-tls
