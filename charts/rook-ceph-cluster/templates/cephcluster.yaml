@@ -1,0 +1,35 @@
+---
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: {{ .Values.clusterName | default .Release.Namespace | quote }}
+  namespace: {{ .Release.Namespace | quote }} # namespace:cluster
+spec:
+  {{- with .Values.monitoring }}
+  monitoring:
+    enabled: {{ .enabled | default false }}
+    {{- with .exporter }}
+    exporter:
+    {{- . | toYaml | nindent 6 }}
+    {{- end }}
+    {{- with .externalMgrEndpoints }}
+    externalMgrEndpoints:
+    {{- . | toYaml | nindent 6 }}
+    {{- end }}
+    {{- with .externalMgrPrometheusPort }}
+    externalMgrPrometheusPort: {{ . | toYaml }}
+    {{- end }}
+    {{- with .interval }}
+    interval: {{ . }}
+    {{- end }}
+  {{- end }}
+  {{- with .Values.cephImage }}
+  cephVersion:
+    image: "{{ .repository }}:{{ .tag }}"
+    allowUnsupported: {{ .allowUnsupported }}
+    {{- with .imagePullPolicy }}
+    imagePullPolicy: {{ . }}
+    {{- end }}
+  {{- end }}
+
+  {{- .Values.cephClusterSpec | toYaml | nindent 2 }}
