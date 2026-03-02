@@ -1,5 +1,15 @@
 apiVersion: v1
 entries:
+  library:
+  - apiVersion: v2
+    created: "2026-03-02T07:00:33.200514956Z"
+    description: A simple library chart to share content between Rook's charts
+    digest: aa1f56860052cc83acd974d44185925238347a2650276c8cc4d1504cf0fc4f43
+    name: library
+    type: library
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/library-0.0.1/library-0.0.1.tgz
+    version: 0.0.1
   linstor-cluster:
   - apiVersion: v2
     appVersion: v2.3.0
@@ -120,6 +130,45 @@ entries:
     urls:
     - https://github.com/dtrdnk/helm-charts/releases/download/piraeus-2.2.0/piraeus-2.2.0.tgz
     version: 2.2.0
+  rook-ceph:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2026-03-02T07:00:33.456740678Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.0.1
+    - alias: ceph-csi-operator
+      condition: csi.rookUseCsiOperator
+      name: ceph-csi-operator
+      repository: https://ceph.github.io/ceph-csi-operator
+      version: 0.5.0
+    description: File, Block, and Object Storage Services for your Cloud-Native Environment
+    digest: c320c4241895fe39041e1b90179835fe99d3f10c2b1fd1c416def1871ab6341a
+    icon: https://rook.io/images/rook-logo.svg
+    name: rook-ceph
+    sources:
+    - https://github.com/rook/rook
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/rook-ceph-0.0.1/rook-ceph-0.0.1.tgz
+    version: 0.0.1
+  rook-ceph-cluster:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2026-03-02T07:00:33.67462333Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.0.1
+    description: Manages a single Ceph cluster namespace for Rook
+    digest: 501051fd7dd72d89b1376a2e3125258654e4894f463ec80a2783a5226b8fee0f
+    icon: https://rook.io/images/rook-logo.svg
+    name: rook-ceph-cluster
+    sources:
+    - https://github.com/rook/rook
+    urls:
+    - https://github.com/dtrdnk/helm-charts/releases/download/rook-ceph-cluster-0.0.1/rook-ceph-cluster-0.0.1.tgz
+    version: 0.0.1
   tempo-operator:
   - apiVersion: v2
     appVersion: v0.4.0
@@ -196,4 +245,4 @@ entries:
     urls:
     - https://github.com/dtrdnk/helm-charts/releases/download/temporal-0.35.0/temporal-0.35.0.tgz
     version: 0.35.0
-generated: "2024-03-17T14:09:07.349789074Z"
+generated: "2026-03-02T07:00:33.674641053Z"
